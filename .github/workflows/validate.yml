@@ -27,5 +27,12 @@ jobs:
       - name: 📥 Download deps
         uses: bahmutov/npm-install@v1
 
+      - name: ✎ Setup test environment
+      - shell: bash
+        run: |
+          echo "SRC_DIR=src_dir" >> .env.local
+          echo "DIST_DIR=dist_dir" >> .env.local
+          echo "FILE_DIR=file_dir" >> .env.local
+
       - name: ▶️ Run validate script
         run: ./Taskfile.sh validate
