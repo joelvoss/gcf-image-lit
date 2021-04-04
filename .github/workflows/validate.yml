@@ -28,7 +28,7 @@ jobs:
         uses: bahmutov/npm-install@v1
 
       - name: ✎ Setup test environment
-      - shell: bash
+        shell: bash
         run: |
           echo "SRC_DIR=src_dir" >> .env.local
           echo "DIST_DIR=dist_dir" >> .env.local
