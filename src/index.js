@@ -30,24 +30,10 @@ const ANIMATABLE_TYPES = [WEBP, PNG, GIF];
 const VECTOR_TYPES = [SVG];
 
 const deviceSizes = process.env.DEVICE_SIZES || [
-	640,
-	750,
-	828,
-	1080,
-	1200,
-	1920,
-	2048,
-	3840,
+	640, 750, 828, 1080, 1200, 1920, 2048, 3840,
 ];
 const imageSizes = process.env.IMAGE_SIZES || [
-	16,
-	32,
-	48,
-	64,
-	96,
-	128,
-	256,
-	384,
+	16, 32, 48, 64, 96, 128, 256, 384,
 ];
 const srcDir = process.env.SRC_DIR;
 const distDir = process.env.DIST_DIR;
