@@ -1,7 +1,7 @@
 {
   "name": "gcf-image-lit",
   "description": "Automatically optimize images stored in Cloud Storage that are requested through this Cloud Function.",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "author": "Joel Voß <mail@joelvoss.com>",
   "license": "MIT",
   "homepage": "https://github.com/joelvoss/gcf-image-lit",
