@@ -24,7 +24,7 @@
     "@hapi/accept": "^5.0.2",
     "cors": "^2.8.5",
     "get-stream": "^6.0.1",
-    "sharp": "^0.29.3"
+    "sharp": "^0.30.5"
   },
   "devDependencies": {
     "@jvdx/core": "^2.9.2",
