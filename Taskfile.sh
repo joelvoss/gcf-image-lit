@@ -60,7 +60,7 @@ deploy() {
     --region=${BUILD_REGION} \
     --project=${BUILD_PROJECT} \
     --trigger-http \
-    --runtime=nodejs12 \
+    --runtime=nodejs16 \
     --entry-point=handler \
     --memory=${BUILD_MEMORY} \
     --max-instances=${BUILD_INSTANCES} \
