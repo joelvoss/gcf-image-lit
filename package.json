@@ -20,19 +20,19 @@
   },
   "dependencies": {
     "@google-cloud/functions-framework": "^3.1.2",
-    "@google-cloud/storage": "^6.2.3",
+    "@google-cloud/storage": "^6.4.2",
     "@hapi/accept": "^6.0.0",
     "cors": "^2.8.5",
     "get-stream": "^6.0.1",
-    "sharp": "^0.30.7"
+    "sharp": "^0.31.0"
   },
   "devDependencies": {
-    "@jvdx/core": "^2.18.0",
+    "@jvdx/core": "^2.19.0",
     "body-parser": "^1.20.0",
     "express": "^4.18.1",
     "fixturez": "^1.1.0",
     "test-listen": "^1.1.0",
-    "undici": "^5.8.0"
+    "undici": "^5.10.0"
   },
   "prettier": "@jvdx/prettier-config",
   "prettierIgnore": [
