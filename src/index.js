@@ -23,6 +23,7 @@ const PNG = 'image/png';
 const JPEG = 'image/jpeg';
 const GIF = 'image/gif';
 const SVG = 'image/svg+xml';
+const MAX_AGE = 60 * 60 * 24 * 365;
 const CACHE_VERSION = 1;
 const OVERWRITE_TYPES = [AVIF, WEBP, PNG, JPEG];
 const MODERN_TYPES = [AVIF, WEBP];
@@ -190,7 +191,7 @@ async function run(req, res) {
 		res.statusCode = upstreamRes.statusCode;
 		upstreamBuffer = data;
 		upstreamType = upstreamRes.headers['content-type'];
-		maxAge = getMaxAge(upstreamRes.headers['cache-control']);
+		maxAge = getMaxAge(upstreamRes.headers['cache-control'], MAX_AGE);
 	} catch ({ response: upstreamRes }) {
 		res.statusCode = upstreamRes.statusCode;
 		res.end('"url" parameter is valid but upstream response is invalid');

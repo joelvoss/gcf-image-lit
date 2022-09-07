@@ -107,10 +107,10 @@ export function getExtension(contentType) {
 /**
  * getMaxAge returns the a maxAge number from a cache-control header string.
  * @param {string|null} str
+ * @param {number} [minimum=60]
  * @returns {number}
  */
-export function getMaxAge(str) {
-	const minimum = 60;
+export function getMaxAge(str, minimum = 60) {
 	const map = parseCacheControl(str);
 
 	if (map) {
