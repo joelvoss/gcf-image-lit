@@ -8,7 +8,7 @@ layer of caching on top of the basic `max-age` caching.
 
 ## Requirements
 
-- Node v12+
+- Node v16+
 - gcloud SDK
 
 ## Development
