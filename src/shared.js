@@ -1,9 +1,8 @@
-import { join } from 'path';
-import { createHash } from 'crypto';
+import { join } from 'node:path';
+import { createHash } from 'node:crypto';
 import { mediaType } from '@hapi/accept';
 import mime from 'mime';
 import { Storage } from '@google-cloud/storage';
-import getStream from 'get-stream';
 
 const storage = new Storage();
 
@@ -41,10 +40,13 @@ export async function getFileBuffer(bucketName, fileName) {
 		response = upstreamRes;
 	});
 
-	const data = await getStream.buffer(fileStream);
+	const chunks = [];
+	for await (const chunk of fileStream) {
+		chunks.push(chunk);
+	}
 
 	return {
-		data,
+		data: Buffer.concat(chunks),
 		response,
 	};
 }
@@ -156,7 +158,7 @@ function parseCacheControl(str) {
  * @param {Buffer} buffer
  */
 function isGIF(buffer) {
-	const header = buffer.slice(0, 3).toString('ascii');
+	const header = buffer.subarray(0, 3).toString('ascii');
 	return header === 'GIF';
 }
 
@@ -247,7 +249,7 @@ function isAnimatedPNG(buffer) {
 
 	while (offset < buffer.length) {
 		let chunkLength = buffer.readUInt32BE(offset);
-		let chunkType = buffer.slice(offset + 4, offset + 8).toString('ascii');
+		let chunkType = buffer.subarray(offset + 4, offset + 8).toString('ascii');
 
 		switch (chunkType) {
 			case 'acTL':
@@ -345,7 +347,6 @@ export function isAnimated(buffer) {
  * @param {string} dir
  * @param {string} fileDir
  * @param {string} contentType
- * @param {number} expireAt
  * @param {number} maxAge
  * @param {Buffer} buffer
  */
@@ -353,13 +354,12 @@ export async function writeToCacheDir(
 	dir,
 	fileDir,
 	contentType,
-	expireAt,
 	maxAge = 1,
 	buffer,
 ) {
 	const extension = mime.getExtension(contentType);
 	const etag = getHash([buffer]);
-	const filename = join(fileDir, `${expireAt}.${etag}.${maxAge}.${extension}`);
+	const filename = join(fileDir, `${etag}.${maxAge}.${extension}`);
 
 	await storage
 		.bucket(dir)
@@ -399,6 +399,7 @@ export async function readFromCacheDir(dir, fileDir) {
 export function sendResponse(req, res, contentType, maxAge = 1, buffer) {
 	const etag = getHash([buffer]);
 	res.setHeader('Cache-Control', `public, max-age=${maxAge}, must-revalidate`);
+	res.setHeader('Vary', 'Accept, Accept-Encoding');
 	if (sendEtagResponse(req, res, etag)) {
 		return;
 	}

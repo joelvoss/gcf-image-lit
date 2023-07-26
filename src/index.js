@@ -23,7 +23,7 @@ const PNG = 'image/png';
 const JPEG = 'image/jpeg';
 const GIF = 'image/gif';
 const SVG = 'image/svg+xml';
-const MAX_AGE = 60 * 60 * 24 * 365;
+const MAX_AGE = 60 * 60 * 24 * 30;
 const CACHE_VERSION = 1;
 const OVERWRITE_TYPES = [AVIF, WEBP, PNG, JPEG];
 const MODERN_TYPES = [AVIF, WEBP];
@@ -147,22 +147,24 @@ async function run(req, res) {
 	//////////////////////////////////////////////////////////////////////////////
 	// Hashing and main business logic
 
-	const hash = getHash([CACHE_VERSION, url, width, quality, format, mimeType]);
+	const hash = getHash([CACHE_VERSION, url, width, quality]);
 	const hashDir = join(fileDir, hash);
-	const now = Date.now();
 
 	// NOTE(joel): Check if an optimized file exists on cloud storage and pipe it
 	// into `res`.
 	const cachedFiles = await readFromCacheDir(distDir, hashDir);
 	if (cachedFiles) {
 		for (let file of cachedFiles) {
-			const [prefix, etag, maxAge, extension] = file.name
+			const [etag, maxAge, extension] = file.name
 				.replace(hashDir + '/', '')
 				.split('.');
-			const expireAt = Number(prefix);
 			const contentType = getContentType(extension);
 
-			if (now < expireAt) {
+			if (
+				(format && `image/${format}` === contentType) ||
+				(mimeType && mimeType === contentType) ||
+				JPEG === contentType
+			) {
 				res.setHeader(
 					'Cache-Control',
 					`public, max-age=${maxAge}, must-revalidate`,
@@ -176,9 +178,10 @@ async function run(req, res) {
 				file.createReadStream().pipe(res);
 				return { finished: true };
 			}
-			await file.delete();
 		}
 	}
+	// eslint-disable-next-line no-console
+	console.log(`INFO - Cache miss for hashDir '${hashDir}'`);
 
 	// NOTE(joel): An optimized file doesn't exist yet. Try fetching the original
 	// and process it.
@@ -198,8 +201,6 @@ async function run(req, res) {
 		return { finished: true };
 	}
 
-	const expireAt = maxAge * 1000 + now;
-
 	// NOTE(joel): Handle image types that cannot be optimized by sharp, e.g.
 	// vector grafics or animatables
 	if (upstreamType) {
@@ -211,7 +212,6 @@ async function run(req, res) {
 				distDir,
 				hashDir,
 				upstreamType,
-				expireAt,
 				maxAge,
 				upstreamBuffer,
 			);
@@ -227,7 +227,7 @@ async function run(req, res) {
 	//   4) Fallback to "image/jpeg" as contentType
 	let contentType;
 	if (format) {
-		contentType = format;
+		contentType = `image/${format}`;
 	} else if (mimeType) {
 		contentType = mimeType;
 	} else if (upstreamType?.startsWith('image/') && getExtension(upstreamType)) {
@@ -263,7 +263,6 @@ async function run(req, res) {
 			distDir,
 			hashDir,
 			contentType,
-			expireAt,
 			maxAge,
 			optimizedBuffer,
 		);

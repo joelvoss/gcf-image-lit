@@ -19,20 +19,19 @@
     "test": "./Taskfile.sh test"
   },
   "dependencies": {
-    "@google-cloud/functions-framework": "^3.2.0",
-    "@google-cloud/storage": "^6.10.0",
-    "@hapi/accept": "^6.0.1",
+    "@google-cloud/functions-framework": "^3.3.0",
+    "@google-cloud/storage": "^6.12.0",
+    "@hapi/accept": "^6.0.2",
     "cors": "^2.8.5",
-    "get-stream": "^6.0.1",
-    "sharp": "^0.32.1"
+    "sharp": "^0.32.4"
   },
   "devDependencies": {
-    "@jvdx/core": "^3.4.0",
+    "@jvdx/core": "^3.5.0",
     "body-parser": "^1.20.2",
     "express": "^4.18.2",
     "fixturez": "^1.1.0",
     "test-listen": "^1.1.0",
-    "undici": "^5.22.0"
+    "undici": "^5.22.1"
   },
   "prettier": "@jvdx/prettier-config",
   "prettierIgnore": [
