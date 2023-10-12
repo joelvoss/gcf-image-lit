@@ -12,6 +12,9 @@
     "type": "git",
     "url": "git+https://github.com/joelvoss/gcf-image-lit.git"
   },
+  "engines": {
+    "node": ">=18"
+  },
   "source": "src/index.js",
   "main": "dist/index.js",
   "scripts": {
@@ -20,18 +23,18 @@
   },
   "dependencies": {
     "@google-cloud/functions-framework": "^3.3.0",
-    "@google-cloud/storage": "^6.12.0",
-    "@hapi/accept": "^6.0.2",
+    "@google-cloud/storage": "^7.3.0",
+    "@hapi/accept": "^6.0.3",
     "cors": "^2.8.5",
-    "sharp": "^0.32.4"
+    "sharp": "^0.32.6"
   },
   "devDependencies": {
-    "@jvdx/core": "^3.5.0",
+    "@jvdx/core": "^3.6.0",
     "body-parser": "^1.20.2",
     "express": "^4.18.2",
     "fixturez": "^1.1.0",
     "test-listen": "^1.1.0",
-    "undici": "^5.22.1"
+    "undici": "^5.26.3"
   },
   "prettier": "@jvdx/prettier-config",
   "prettierIgnore": [
