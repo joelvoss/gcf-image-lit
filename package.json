@@ -34,7 +34,7 @@
     "express": "^4.18.2",
     "fixturez": "^1.1.0",
     "test-listen": "^1.1.0",
-    "undici": "^5.26.3"
+    "undici": "^5.28.3"
   },
   "prettier": "@jvdx/prettier-config",
   "prettierIgnore": [
