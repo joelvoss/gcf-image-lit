@@ -1,10 +1,12 @@
-# ignore everything by default
-*
-
-# allow files explicitly
-!dist/**
-!package.json
-!Taskfile.sh
-
-# explicitly allow current dir. `gcloud deploy` fails without it.
-!.
+.git
+.github
+node_modules
+dist
+.e2e-cache
+coverage
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.DS_Store
+.env
+.env.*

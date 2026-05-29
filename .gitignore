@@ -10,6 +10,7 @@
 
 # production
 /dist
+/.e2e-cache
 
 # misc
 .DS_Store

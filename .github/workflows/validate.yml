@@ -4,35 +4,27 @@ on:
     branches:
       - 'main'
   pull_request: {}
+concurrency:
+  group: validate-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
   main:
     strategy:
       matrix:
-        node: [18, 20]
+        node: [24]
     runs-on: ubuntu-latest
     steps:
-      - name: 🛑 Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ secrets.GITHUB_TOKEN }}
-
       - name: ⬇️ Checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: ⎔ Setup node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node }}
+          cache: npm
 
       - name: 📥 Download deps
-        uses: bahmutov/npm-install@v1
-
-      - name: ✎ Setup test environment
-        shell: bash
-        run: |
-          echo "SRC_DIR=src_dir" >> .env.local
-          echo "DIST_DIR=dist_dir" >> .env.local
-          echo "FILE_DIR=file_dir" >> .env.local
+        run: npm ci
 
       - name: ▶️ Run validate script
         run: ./Taskfile.sh validate
