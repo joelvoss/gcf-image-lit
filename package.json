@@ -1,6 +1,6 @@
 {
   "name": "gcf-image-lit",
-  "description": "Automatically optimize images stored in Cloud Storage that are requested through this Cloud Function.",
+  "description": "Automatically optimize images stored in Cloud Storage that are requested through this Cloud Run service.",
   "version": "3.0.0",
   "author": "Joel Voß <mail@joelvoss.com>",
   "license": "MIT",
@@ -13,39 +13,27 @@
     "url": "git+https://github.com/joelvoss/gcf-image-lit.git"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=24"
   },
-  "source": "src/index.js",
+  "source": "src/index.ts",
   "main": "dist/index.js",
   "scripts": {
+    "dev": "./Taskfile.sh dev",
     "start": "./Taskfile.sh start",
-    "test": "./Taskfile.sh test"
+    "test": "./Taskfile.sh test",
+    "prepublishOnly": "./Taskfile.sh build"
   },
   "dependencies": {
-    "@google-cloud/functions-framework": "^3.3.0",
-    "@google-cloud/storage": "^7.3.0",
+    "@google-cloud/storage": "^7.19.0",
     "@hapi/accept": "^6.0.3",
-    "cors": "^2.8.5",
-    "sharp": "^0.32.6"
+    "cors": "^2.8.6",
+    "sharp": "^0.34.5"
   },
   "devDependencies": {
-    "@jvdx/core": "^3.6.0",
-    "body-parser": "^1.20.2",
-    "express": "^4.18.2",
-    "fixturez": "^1.1.0",
-    "test-listen": "^1.1.0",
-    "undici": "^5.26.3"
-  },
-  "prettier": "@jvdx/prettier-config",
-  "prettierIgnore": [
-    "tests/",
-    "dist/"
-  ],
-  "eslintConfig": {
-    "extends": "@jvdx/eslint-config"
-  },
-  "eslintIgnore": [
-    "tests/",
-    "dist/"
-  ]
+    "oxfmt": "0.51.0",
+    "oxlint": "1.66.0",
+    "typescript": "6.0.3",
+    "vite": "8.0.13",
+    "vitest": "4.1.7"
+  }
 }

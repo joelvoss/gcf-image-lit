@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>gcf-image-lit local dev harness</title>
+		<style>
+			body {
+				font-family: sans-serif;
+				margin: 2rem;
+			}
+
+			main {
+				display: grid;
+				gap: 1rem;
+				max-width: 960px;
+			}
+
+			img {
+				max-width: 100%;
+				height: auto;
+				border: 1px solid #ccc;
+			}
+
+			code {
+				word-break: break-all;
+			}
+		</style>
+	</head>
+	<body>
+		<main>
+			<h1>gcf-image-lit local dev harness</h1>
+			<p>
+				This page targets the real local service through a filesystem-backed
+				harness.
+			</p>
+			<section>
+				<h2>Optimized PNG request</h2>
+				<code>/optimize?url=/fixtures/default.png&amp;w=128&amp;q=75</code>
+				<img
+					alt="Optimized demo image"
+					src="/optimize?url=/fixtures/default.png&w=128&q=75"
+				/>
+			</section>
+			<section>
+				<h2>Original Animated GIF passthrough</h2>
+				<code>/optimize?url=/fixtures/animated.gif&amp;w=128&amp;q=75</code>
+				<img
+					alt="Animated passthrough demo"
+					src="/optimize?url=/fixtures/animated.gif&w=128&q=75"
+				/>
+			</section>
+			<section>
+				<h2>Original Fixture Reference</h2>
+				<img alt="Original PNG fixture" src="/fixtures/default.png" />
+			</section>
+		</main>
+	</body>
+</html>
