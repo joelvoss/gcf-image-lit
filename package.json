@@ -27,7 +27,7 @@
     "@google-cloud/storage": "^7.19.0",
     "@hapi/accept": "^6.0.3",
     "cors": "^2.8.6",
-    "sharp": "^0.34.5"
+    "sharp": "^0.35.0"
   },
   "devDependencies": {
     "oxfmt": "0.51.0",
